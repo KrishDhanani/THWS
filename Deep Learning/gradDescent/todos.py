@@ -76,7 +76,7 @@ def linreg_gd(data, lr, n_epochs=1000):
   return theta_0, theta_1, losses
 
 
-# TODO 3: complete the code below
+# TODO 4: complete the code below
 def linreg_sgd(data, bs, lr, n_epochs=1000):
   """Stochastic gradient descent solution for parameters of linear model.
   y = theta_0 + theta_1 x
