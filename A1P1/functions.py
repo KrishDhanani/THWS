@@ -178,8 +178,14 @@ def linear_ggrad(gout, ins, theta_1, theta_0):
                ggrad_ins:     torch.tensor of shape (N, in_features)
     """
     # TODO: implement using linear_lgrad
-    pass
+    lgrd = linear_lgrad(ins, theta_1, theta_0) 
+    lg_theta_1, lg_theta_0, lg_ins = lgrd
 
+    ggrad_theta_1 = gout.T @ lg_theta_1
+    ggrad_theta_0 = (gout * lg_theta_0).sum(dim=0, keepdim=True)
+    ggrad_ins = gout @ theta_1
+    
+    return tuple(ggrad_theta_1, ggrad_theta_0, ggrad_ins)
 
 # ==============================================================================
 # Section 3 — ReLU backward
