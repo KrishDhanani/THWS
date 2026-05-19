@@ -200,8 +200,23 @@ def relu_lgrad_scalar(z):
     Returns:
         torch.tensor of shape () - local gradient da/dz
     """
+    """
+    J.J.
+    x = torch.tensor(3.14)   # scalar tensor, shape ()
+    x = torch.tensor(0.0)    # scalar tensor, shape ()
+    x = torch.tensor(-5)     # scalar tensor, shape ()
+
+    another equal sol. is:
+    if (z>0).float():
+        return torch.ones_like(z)   # when giving z it return shape like z; shape()
+    else:
+        return torch.zeros_like(z)
+    """
     # TODO: implement
-    pass
+    if z > 0:
+        return torch.ones_like(z)
+    else:
+        return torch.zeros_like(z)
 
 
 def relu_ggrad_scalar(gout, z):
@@ -217,7 +232,7 @@ def relu_ggrad_scalar(gout, z):
         torch.tensor of shape () - global gradient dL/dz
     """
     # TODO: implement using relu_lgrad_scalar
-    pass
+    return gout * relu_lgrad_scalar(z)
 
 
 def relu_lgrad(ins):
@@ -230,7 +245,7 @@ def relu_lgrad(ins):
         torch.tensor of same shape - local gradient
     """
     # TODO: implement
-    pass
+    return (ins > 0).float() # This works element-wise on a tensor of any shape — every element gets checked independently, returning 1.0 or 0.0
 
 
 def relu_ggrad(gout, ins):
@@ -246,4 +261,4 @@ def relu_ggrad(gout, ins):
         torch.tensor of same shape - global gradient dL/dZ
     """
     # TODO: implement using relu_lgrad
-    pass
+    return gout * relu_lgrad(ins)

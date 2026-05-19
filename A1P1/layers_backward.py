@@ -17,31 +17,31 @@ from functions import linear_ggrad, relu_ggrad
 
 
 # TODO: Copy your Linear class from Part 1 here and add the backward method below.
-#
-# class Linear:
-#
-#     def __init__(self, theta_1, theta_0):
-#         ...  # your Part 1 implementation
-#
-#     def forward(self, ins):
-#         ...  # your Part 1 implementation
-#
-#     def backward(self, gout):
-#         """Backward pass: compute and store global gradients.
-#
-#         Stores gradients as attributes on the tensors:
-#             self.theta_1.g of shape (out_features, in_features)
-#             self.theta_0.g of shape (1, out_features)
-#             self.ins.g     of shape (N, in_features)
-#
-#         Args:
-#             gout: torch.tensor of shape (N, out_features) - upstream gradient dL/dZ
-#
-#         Returns:
-#             torch.tensor of shape (N, in_features) - gradient w.r.t. input
-#         """
-#         # TODO: assign results to .g attributes, return self.ins.g
-#         pass
+
+class Linear:
+
+    def __init__(self, theta_1, theta_0):
+        ...  # your Part 1 implementation
+
+    def forward(self, ins):
+        ...  # your Part 1 implementation
+
+    def backward(self, gout):
+        """Backward pass: compute and store global gradients.
+
+        Stores gradients as attributes on the tensors:
+            self.theta_1.g of shape (out_features, in_features)
+            self.theta_0.g of shape (1, out_features)
+            self.ins.g     of shape (N, in_features)
+
+        Args:
+            gout: torch.tensor of shape (N, out_features) - upstream gradient dL/dZ
+
+        Returns:
+            torch.tensor of shape (N, in_features) - gradient w.r.t. input
+        """
+        # TODO: assign results to .g attributes, return self.ins.g
+        pass
 
 
 # TODO: Copy your ReLU class from Part 1 here and add the backward method below.
