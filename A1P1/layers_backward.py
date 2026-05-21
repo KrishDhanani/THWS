@@ -14,7 +14,8 @@ Use only PyTorch tensor operations — no numpy, no torch.nn.
 
 import torch
 from functions import linear_ggrad, relu_ggrad
-from layers import linear_forward, ReLU
+from layers import linear_forward
+from layers import ReLU as ReluBase
 
 # TODO: Copy your Linear class from Part 1 here and add the backward method below.
 
@@ -55,16 +56,16 @@ class Linear:
 
 # TODO: Copy your ReLU class from Part 1 here and add the backward method below.
 #
-class ReLU:
+class ReLU(ReluBase):
 
-    def __init__(self, ins):
+    """def __init__(self, ins):
         self.ins = ins
 
     # Here instead of hardcoding we can inherit the Relu class from layers.py and reuse the forward methode directly.  
     def forward(self, ins):
         self.ins = ins
         self.outs = torch.clamp(ins, min=0)
-        return self.outs
+        return self.outs"""
 
     def backward(self, gout):
         """Backward pass: compute and store global gradient.
@@ -88,10 +89,13 @@ class ReLU:
 class Model:
 
     def __init__(self, layers):
-        ...  # your Part 1 implementation
+        self.layers = layers
 
     def forward(self, ins):
-        ...  # your Part 1 implementation
+        out = ins
+        for layer in self.layers:
+            out = layer.forward(out)
+        return out 
 
     def backward(self, gout):
         """Backward pass through all layers in reverse order.
@@ -103,4 +107,6 @@ class Model:
             torch.tensor - gradient w.r.t. network input
         """
         # TODO: implement
-        pass
+        for layer in reversed(self.layers):
+            gout = layer.backward(gout)
+        return gout
