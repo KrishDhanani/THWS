@@ -184,6 +184,9 @@ def linear_ggrad(gout, ins, theta_1, theta_0):
     ggrad_theta_1 = gout.T @ lg_theta_1
     ggrad_theta_0 = (gout * lg_theta_0).sum(dim=0, keepdim=True)
     ggrad_ins = gout @ theta_1
+
+    print("lg_theta_0 shape:", lg_theta_0.shape)
+    print("gout shape:", gout.shape)
     
     return (ggrad_theta_1, ggrad_theta_0, ggrad_ins)
 
