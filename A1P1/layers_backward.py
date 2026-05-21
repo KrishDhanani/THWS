@@ -14,17 +14,25 @@ Use only PyTorch tensor operations — no numpy, no torch.nn.
 
 import torch
 from functions import linear_ggrad, relu_ggrad
-
+from layers import linear_forward, ReLU
 
 # TODO: Copy your Linear class from Part 1 here and add the backward method below.
 
 class Linear:
 
     def __init__(self, theta_1, theta_0):
-        ...  # your Part 1 implementation
+        self.theta_0 = theta_0
+        self.theta_1 = theta_1
+        self.ins = None
+        self.outs = None
+        self.theta_0.g = None
+        self.theta_1.g = None
 
     def forward(self, ins):
-        ...  # your Part 1 implementation
+        self.ins = ins
+        X = self.ins
+        self.outs = linear_forward(X, self.theta_1, self.theta_0)
+        return self.outs
 
     def backward(self, gout):
         """Backward pass: compute and store global gradients.
@@ -41,50 +49,58 @@ class Linear:
             torch.tensor of shape (N, in_features) - gradient w.r.t. input
         """
         # TODO: assign results to .g attributes, return self.ins.g
-        pass
+        self.theta_1.g, self.theta_0.g, self.ins.g = linear_ggrad(gout, self.ins, self.theta_1, self.theta_0)
+        return self.ins.g
 
 
 # TODO: Copy your ReLU class from Part 1 here and add the backward method below.
 #
-# class ReLU:
-#
-#     def forward(self, ins):
-#         ...  # your Part 1 implementation
-#
-#     def backward(self, gout):
-#         """Backward pass: compute and store global gradient.
-#
-#         Stores gradient as attribute on the tensor:
-#             self.ins.g of same shape as self.ins
-#
-#         Args:
-#             gout: torch.tensor of same shape as self.ins - upstream gradient dL/dA
-#
-#         Returns:
-#             torch.tensor of same shape - gradient w.r.t. input
-#         """
-#         # TODO: assign result to self.ins.g, return self.ins.g
-#         pass
+class ReLU:
+
+    def __init__(self, ins):
+        self.ins = ins
+
+    # Here instead of hardcoding we can inherit the Relu class from layers.py and reuse the forward methode directly.  
+    def forward(self, ins):
+        self.ins = ins
+        self.outs = torch.clamp(ins, min=0)
+        return self.outs
+
+    def backward(self, gout):
+        """Backward pass: compute and store global gradient.
+
+        Stores gradient as attribute on the tensor:
+            self.ins.g of same shape as self.ins
+
+        Args:
+            gout: torch.tensor of same shape as self.ins - upstream gradient dL/dA
+
+        Returns:
+            torch.tensor of same shape - gradient w.r.t. input
+        """
+        # TODO: assign result to self.ins.g, return self.ins.g
+        self.ins.g = relu_ggrad(gout, self.ins)
+        return self.ins.g
 
 
 # TODO: Copy your Model class from Part 1 here and add the backward method below.
 #
-# class Model:
-#
-#     def __init__(self, layers):
-#         ...  # your Part 1 implementation
-#
-#     def forward(self, ins):
-#         ...  # your Part 1 implementation
-#
-#     def backward(self, gout):
-#         """Backward pass through all layers in reverse order.
-#
-#         Args:
-#             gout: torch.tensor - upstream gradient from the loss
-#
-#         Returns:
-#             torch.tensor - gradient w.r.t. network input
-#         """
-#         # TODO: implement
-#         pass
+class Model:
+
+    def __init__(self, layers):
+        ...  # your Part 1 implementation
+
+    def forward(self, ins):
+        ...  # your Part 1 implementation
+
+    def backward(self, gout):
+        """Backward pass through all layers in reverse order.
+
+        Args:
+            gout: torch.tensor - upstream gradient from the loss
+
+        Returns:
+            torch.tensor - gradient w.r.t. network input
+        """
+        # TODO: implement
+        pass

@@ -59,7 +59,7 @@ def mse_backward(y_pred, y):
     J.J. for tensor case there is always N. so; dy/​dL​=2/N(y_pred​−y)
     """
     # TODO: implement
-    N = y_pred.shape[0]
+    N = y_pred.numel()
     return (2/N) * (y_pred - y)
 
 
@@ -185,7 +185,7 @@ def linear_ggrad(gout, ins, theta_1, theta_0):
     ggrad_theta_0 = (gout * lg_theta_0).sum(dim=0, keepdim=True)
     ggrad_ins = gout @ theta_1
     
-    return tuple(ggrad_theta_1, ggrad_theta_0, ggrad_ins)
+    return (ggrad_theta_1, ggrad_theta_0, ggrad_ins)
 
 # ==============================================================================
 # Section 3 — ReLU backward
