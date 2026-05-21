@@ -15,7 +15,7 @@ def linear_model(x, theta):
   """
 
   # prepend x by a zeros to match the dims of theta
-  x = 
+  x = torch.tensor()
   y =
   return y
 
